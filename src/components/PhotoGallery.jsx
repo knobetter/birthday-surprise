@@ -62,7 +62,7 @@ const PHOTOS = [
   {
     id: 9,
     url: "/images/image27.jpeg",
-    caption: "",
+    caption: "Konchem Navvinattu act chedham",
     rotation: "-rotate-2",
     sticky: "",
     modalNote: "",
@@ -198,7 +198,7 @@ const PHOTOS = [
   {
     id: 27,
     url: "/images/image23.jpeg",
-    caption: "",
+    caption: "Okoka mettu ekkuthane building ekkuthav",
     rotation: "-rotate-2",
     sticky: "",
     modalNote: "",
@@ -214,7 +214,7 @@ const PHOTOS = [
   {
     id: 29,
     url: "/images/image31.jpeg",
-    caption: "",
+    caption: "Endhi chusthunav, kantichuputho esestha",
     rotation: "-rotate-2",
     sticky: "",
     modalNote: "",
@@ -318,7 +318,7 @@ const PHOTOS = [
   {
     id: 43,
     url: "/images/image57.jpeg",
-    caption: "",
+    caption: "Chikkadpally don ni ra betey, kantichupu tho Champestha",
     rotation: "rotate-2",
     sticky: "",
     modalNote: "",
@@ -326,7 +326,7 @@ const PHOTOS = [
   {
     id: 44,
     url: "/images/image58.jpeg",
-    caption: "",
+    caption: "Navvukunta puvvu lepestha",
     rotation: "-rotate-2",
     sticky: "",
     modalNote: "",

@@ -214,7 +214,7 @@ const PHOTOS = [
   {
     id: 29,
     url: "/images/image31.jpeg",
-    caption: "Endhi chusthunav, kantichuputho esestha",
+    caption: "Endhi chusthunav, Attitude queen ikkada",
     rotation: "-rotate-2",
     sticky: "",
     modalNote: "",

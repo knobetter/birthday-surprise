@@ -101,11 +101,10 @@ export default function FinalSurprise({ name }) {
         </div>
 
         <h1 className="text-4xl md:text-6xl font-black text-rose-500 tracking-tight my-1 drop-shadow-sm">
-          HAPPY BIRTHDAY
-              DITYA
+          HAPPYYYY BIRTHDAYYYY
+              DITYAAAA
         </h1>
         <h2 className="text-3xl md:text-5xl font-extrabold text-pink-600 font-handwriting">
-          DITYA 🌸🪷
         </h2>
         <p className="text-sm md:text-base font-bold text-slate-600 mt-3 italic bg-white/85 backdrop-blur-md py-1.5 px-5 rounded-full border border-pink-200 inline-block shadow-sm">
           Another year older... But unfortunately, still as crazy 😂💗
@@ -335,7 +334,7 @@ export default function FinalSurprise({ name }) {
 
   <div className="text-center mt-6 pt-4 border-t border-pink-100">
     <p className="text-xl md:text-2xl font-black text-pink-600">
-      🌸 HAPPYYYYY BIRTHDAYYYYY TO THE BEST SISTER & BEST FRIEND! 🎂✨
+      🌸 HAPPIESTTTTT BIRTHDAYYYYY TO THE BEST SISTER & BEST FRIEND! 🎂✨
     </p>
     <p className="text-sm font-handwriting text-slate-500 font-bold mt-1 text-base">
       💌 From Your Most Annoying Brother

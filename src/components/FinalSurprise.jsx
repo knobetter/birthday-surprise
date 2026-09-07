@@ -1,450 +1,324 @@
-import React, { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import confetti from "canvas-confetti";
-import { Heart, Sparkles } from "lucide-react";
+import React, { useState, useEffect, useRef } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import OpeningScreen from "./components/OpeningScreen";
+import PhotoGallery from "./components/PhotoGallery";
+import FinalLetter from "./components/FinalLetter";
+import FinalSurprise from "./components/FinalSurprise";
+import MusicControl from "./components/MusicControl";
 
-export default function FinalSurprise({ name = "Ditya" }) {
-  const [candlesBlown, setCandlesBlown] = useState(false);
-  const [timeLeft, setTimeLeft] = useState({
-    days: 0,
-    hours: 0,
-    minutes: 0,
-    seconds: 0,
-  });
+export const FRIEND_DATA = {
+  name: "Ditya",
+  nextBirthday: "2027-09-08T00:00:00",
+};
 
-  // Grand celebration confetti burst
-  useEffect(() => {
-    const fireCelebrationConfetti = () => {
-      const count = 220;
-      const defaults = { origin: { y: 0.7 } };
+// Realistic Fairy Lights config
+const FAIRY_LIGHTS_CONFIG = [
+  { duration: 2.1, delay: 0.1 },
+  { duration: 1.6, delay: 0.8 },
+  { duration: 2.7, delay: 0.3 },
+  { duration: 1.9, delay: 1.2 },
+  { duration: 2.4, delay: 0.5 },
+  { duration: 1.8, delay: 1.0 },
+];
 
-      function fire(particleRatio, opts) {
-        confetti({
-          ...defaults,
-          ...opts,
-          particleCount: Math.floor(count * particleRatio),
-        });
-      }
-
-      fire(0.25, { spread: 26, startVelocity: 55, colors: ["#ff719a", "#ffd1dc", "#fff176"] });
-      fire(0.2, { spread: 60, colors: ["#f472b6", "#fbcfe8", "#ffffff"] });
-      fire(0.35, { spread: 100, decay: 0.91, scalar: 0.8 });
-      fire(0.1, { spread: 120, startVelocity: 25, decay: 0.92, scalar: 1.2 });
-      fire(0.1, { spread: 120, startVelocity: 45 });
-    };
-
-    fireCelebrationConfetti();
-    const timer = setTimeout(fireCelebrationConfetti, 1400);
-    return () => clearTimeout(timer);
-  }, []);
-
-  // Real-time countdown to NEXT YEAR'S Birthday: September 8, 2027
-  useEffect(() => {
-    const calculateCountdown = () => {
-      const now = new Date();
-      const target = new Date("2027-09-08T00:00:00");
-      const diff = target - now;
-
-      if (diff > 0) {
-        const d = Math.floor(diff / (1000 * 60 * 60 * 24));
-        const h = Math.floor((diff / (1000 * 60 * 60)) % 24);
-        const m = Math.floor((diff / 1000 / 60) % 60);
-        const s = Math.floor((diff / 1000) % 60);
-
-        setTimeLeft({
-          days: d,
-          hours: h,
-          minutes: m,
-          seconds: s,
-        });
-      }
-    };
-
-    calculateCountdown();
-    const interval = setInterval(calculateCountdown, 1000);
-    return () => clearInterval(interval);
-  }, []);
-
-  const handleBlowCandles = () => {
-    if (candlesBlown) return;
-    setCandlesBlown(true);
-
-    confetti({
-      particleCount: 180,
-      spread: 90,
-      origin: { y: 0.5 },
-      colors: ["#f43f5e", "#fb7185", "#ffd700", "#ffffff", "#fbcfe8"],
-    });
-  };
-
-  const formatNumber = (num) => String(num).padStart(2, "0");
-
+/* 🌸 LUXURY FLORAL CORNER BOUQUET (SVG) 🌸 */
+function LuxuryFloralArch({ position = "left" }) {
+  const isLeft = position === "left";
   return (
-    <motion.div
-      initial={{ opacity: 0, scale: 0.96 }}
-      animate={{ opacity: 1, scale: 1 }}
-      transition={{ duration: 0.9 }}
-      className="w-full flex flex-col items-center py-6 px-3 text-center relative max-w-xl mx-auto z-10"
+    <div
+      className={`hidden lg:flex fixed ${
+        isLeft ? "left-0" : "right-0"
+      } top-0 bottom-0 w-56 flex-col justify-between py-12 items-center pointer-events-none z-10 select-none`}
     >
-      {/* 🌸 Ambient Background Glow & Floating Sparkles */}
-      <div className="fixed inset-0 pointer-events-none -z-10 overflow-hidden">
-        <div className="absolute top-10 left-1/2 -translate-x-1/2 w-[34rem] h-[34rem] bg-rose-200/40 rounded-full blur-3xl" />
-        <div className="absolute bottom-20 left-1/4 w-80 h-80 bg-pink-200/30 rounded-full blur-3xl" />
-        
-        {/* Organic Floating Elements */}
-        {[...Array(12)].map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute text-rose-300/60 select-none text-xl md:text-2xl"
-            style={{
-              left: `${(i * 9 + 4) % 94}%`,
-              top: `${(i * 13 + 5) % 90}%`,
-            }}
-            animate={{
-              y: [0, -18, 0],
-              x: [0, i % 2 === 0 ? 10 : -10, 0],
-              rotate: [0, 20, 0],
-              opacity: [0.3, 0.75, 0.3],
-            }}
-            transition={{
-              duration: 4 + (i % 4),
-              repeat: Infinity,
-              ease: "easeInOut",
-              delay: i * 0.4,
-            }}
-          >
-            {["🌸", "✨", "🌷", "🪷", "💖"][i % 5]}
-          </motion.div>
-        ))}
-      </div>
+      {/* Soft Romantic Vines & Glow */}
+      <div
+        className={`absolute inset-0 bg-gradient-to-${
+          isLeft ? "r" : "l"
+        } from-pink-200/20 via-rose-100/10 to-transparent blur-xl`}
+      />
 
-      {/* 1. EDITORIAL HEADER */}
+      {/* Top Rose Cluster Card */}
       <motion.div
-        initial={{ y: -25, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.8 }}
-        className="mb-8 flex flex-col items-center"
+        animate={{ y: [0, -6, 0], rotate: isLeft ? [-3, -1, -3] : [3, 1, 3] }}
+        transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut" }}
+        className="relative bg-white/70 backdrop-blur-md p-4 rounded-3xl border border-rose-200/80 shadow-[0_10px_25px_rgba(244,63,94,0.12)] flex flex-col items-center mx-6"
       >
-        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/70 border border-rose-200/70 text-rose-600 font-bold text-xs uppercase tracking-widest mb-4 shadow-sm backdrop-blur-md">
-          <Sparkles className="w-3.5 h-3.5 text-rose-400" />
-          <span>A Special Day For A Special Person</span>
-          <Sparkles className="w-3.5 h-3.5 text-rose-400" />
+        <div className="w-14 h-14 rounded-2xl bg-gradient-to-tr from-rose-400 via-pink-400 to-rose-300 flex items-center justify-center shadow-[0_6px_16px_rgba(244,63,94,0.3)]">
+          <svg className="w-8 h-8 text-white filter drop-shadow" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+          </svg>
         </div>
-
-        <h1 className="font-serif italic text-4xl sm:text-5xl md:text-6xl text-rose-900 tracking-tight leading-tight">
-          Happy Birthday,{" "}
-          <span className="not-italic font-bold bg-gradient-to-r from-rose-500 via-pink-600 to-purple-600 bg-clip-text text-transparent block sm:inline mt-1 sm:mt-0 drop-shadow-sm">
-            Ditya
-          </span>{" "}
-          ✨
-        </h1>
-
-        <p className="text-sm md:text-base font-medium text-rose-800/90 mt-4 italic bg-white/70 backdrop-blur-md py-1.5 px-6 rounded-full border border-rose-200/60 shadow-xs inline-flex items-center gap-2">
-          <span>Another year older... But unfortunately, still as crazy 😂💗</span>
-        </p>
+        <span className="font-serif italic text-xs text-rose-800 font-semibold mt-2">
+          {isLeft ? "Forever Loved 🌹" : "Pure Sunshine ☀️"}
+        </span>
       </motion.div>
 
-      {/* 2. ARTISANAL PATISSERIE BIRTHDAY CAKE */}
-      <div className="w-full bg-white/80 backdrop-blur-xl rounded-3xl p-6 md:p-8 shadow-[0_20px_50px_rgba(244,63,94,0.12)] border border-white/70 mb-8 flex flex-col items-center relative overflow-hidden">
-        <div className="absolute top-4 left-5 text-[11px] font-mono tracking-widest text-rose-400/80 uppercase">
-          ✧ Patisserie Royale ✧
+      {/* Mid Fluttering Butterfly */}
+      <motion.div
+        animate={{
+          x: isLeft ? [0, 15, 0] : [0, -15, 0],
+          y: [-10, 10, -10],
+          rotate: isLeft ? [10, -5, 10] : [-10, 5, -10],
+        }}
+        transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+        className="relative flex flex-col items-center"
+      >
+        <div className="w-12 h-12 rounded-full bg-pink-100/80 backdrop-blur-sm border border-pink-300 flex items-center justify-center shadow-lg">
+          <PinkButterfly size={28} />
         </div>
-        <div className="absolute top-4 right-5 flex gap-1 text-xs text-amber-400">
-          ✨✨
-        </div>
+        <span className="text-[10px] font-mono tracking-widest text-rose-400 font-bold uppercase mt-1">
+          {isLeft ? "Grace & Bloom" : "Joy & Laughter"}
+        </span>
+      </motion.div>
 
-        <div className="mt-4 mb-2">
-          <h3 className="text-2xl md:text-3xl font-serif italic text-rose-700 flex items-center justify-center gap-2">
-            <span>Make A Wish...</span>
-            <span className="not-italic">💫</span>
-          </h3>
-          <p className="text-xs md:text-sm text-slate-500 font-normal mt-1">
-            Close your eyes for a second, hold that wish close to your heart 💗
-          </p>
+      {/* Bottom Botanical Glass Vignette */}
+      <motion.div
+        animate={{ y: [0, 6, 0], rotate: isLeft ? [2, 4, 2] : [-2, -4, -2] }}
+        transition={{ duration: 5.2, repeat: Infinity, ease: "easeInOut" }}
+        className="relative bg-white/70 backdrop-blur-md p-4 rounded-3xl border border-rose-200/80 shadow-[0_10px_25px_rgba(244,63,94,0.12)] flex flex-col items-center mx-6"
+      >
+        <div className="w-14 h-14 rounded-2xl bg-gradient-to-tr from-amber-300 via-rose-300 to-pink-400 flex items-center justify-center shadow-[0_6px_16px_rgba(251,191,36,0.3)] text-2xl">
+          🌸
         </div>
+        <span className="font-serif italic text-xs text-rose-800 font-semibold mt-2">
+          {isLeft ? "Rare & Cherished ✨" : "Always Shining 🌟"}
+        </span>
+      </motion.div>
+    </div>
+  );
+}
 
-        {/* INTERACTIVE CAKE */}
-        <div
-          onClick={handleBlowCandles}
-          className="relative cursor-pointer group flex flex-col items-center pt-8 pb-4 select-none"
+/* 🌸 DELICATE FLOATING PETALS (Layered SVG + Soft Blur) 🌸 */
+function LuxuryFloatingPetals() {
+  const petals = [
+    { left: "5%", size: 24, dur: 12, delay: 0 },
+    { left: "15%", size: 18, dur: 14, delay: 2 },
+    { left: "22%", size: 28, dur: 10, delay: 4 },
+    { left: "78%", size: 22, dur: 13, delay: 1 },
+    { left: "86%", size: 30, dur: 11, delay: 3 },
+    { left: "93%", size: 16, dur: 15, delay: 5 },
+  ];
+
+  return (
+    <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden select-none">
+      {petals.map((p, idx) => (
+        <motion.div
+          key={idx}
+          className="absolute"
+          style={{ left: p.left }}
+          initial={{ top: "-8%", rotate: 0, opacity: 0 }}
+          animate={{
+            top: ["-5%", "108%"],
+            x: [0, idx % 2 === 0 ? 30 : -30, 0],
+            rotate: [0, 240, 360],
+            opacity: [0, 0.85, 0.85, 0],
+          }}
+          transition={{
+            duration: p.dur,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: p.delay,
+          }}
         >
-          {/* Ambient Candlelight Warmth */}
-          <motion.div
-            animate={{
-              opacity: candlesBlown ? 0 : [0.6, 0.95, 0.65, 0.9, 0.6],
-              scale: candlesBlown ? 0.7 : [1, 1.08, 0.96, 1.04, 1],
-            }}
-            transition={{ duration: 1.2, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute top-10 w-48 h-20 rounded-full bg-gradient-to-b from-amber-300/40 via-yellow-200/20 to-transparent blur-xl pointer-events-none z-20"
-          />
+          {/* Artisanal Realistic Cherry Blossom Petal */}
+          <svg width={p.size} height={p.size * 1.3} viewBox="0 0 40 50" fill="none">
+            <path
+              d="M20 0 C32 10, 40 30, 20 50 C0 30, 8 10, 20 0 Z"
+              fill="url(#petalGrad)"
+              className="filter drop-shadow-[0_4px_8px_rgba(244,63,94,0.25)]"
+            />
+            <defs>
+              <linearGradient id="petalGrad" x1="20" y1="0" x2="20" y2="50" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stopColor="#fff0f3" />
+                <stop offset="50%" stopColor="#fca5a5" />
+                <stop offset="100%" stopColor="#f43f5e" />
+              </linearGradient>
+            </defs>
+          </svg>
+        </motion.div>
+      ))}
+    </div>
+  );
+}
 
-          {/* 3 ARTISANAL CANDLES */}
-          <div className="flex gap-8 mb-[-4px] z-30 relative">
-            {[1, 2, 3].map((candle, idx) => (
-              <div key={candle} className="flex flex-col items-center relative">
-                {!candlesBlown ? (
-                  <div className="relative flex flex-col items-center">
-                    <motion.div
-                      animate={{
-                        opacity: [0.5, 0.9, 0.5],
-                        scale: [1, 1.15, 1],
-                      }}
-                      transition={{
-                        duration: 0.8 + idx * 0.15,
-                        repeat: Infinity,
-                        ease: "easeInOut",
-                      }}
-                      className="absolute -top-3 w-10 h-14 rounded-full bg-amber-400/35 blur-md pointer-events-none"
-                    />
+/* 🌸 CUTE ARTISANAL PINK BUTTERFLY COMPONENT 🌸 */
+function PinkButterfly({ size = 32, className = "" }) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 64 64"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className={`filter drop-shadow-[0_4px_8px_rgba(244,63,94,0.35)] ${className}`}
+    >
+      <defs>
+        <linearGradient id="pinkWingGrad" x1="0" y1="0" x2="64" y2="64" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stopColor="#fb7185" />
+          <stop offset="50%" stopColor="#f43f5e" />
+          <stop offset="100%" stopColor="#f43f5e" />
+        </linearGradient>
+        <linearGradient id="innerWingGlow" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stopColor="#ffffff" stopOpacity="0.85" />
+          <stop offset="100%" stopColor="#ffe4e6" stopOpacity="0.25" />
+        </linearGradient>
+      </defs>
 
-                    <motion.div
-                      animate={{
-                        scaleY: [1, 1.18, 0.92, 1.12, 1],
-                        scaleX: [1, 0.88, 1.08, 0.92, 1],
-                        rotate: [idx === 1 ? -1 : idx === 2 ? 2 : -2, 2, -1, 1, 0],
-                      }}
-                      transition={{
-                        duration: 0.65 + idx * 0.1,
-                        repeat: Infinity,
-                        ease: "easeInOut",
-                      }}
-                      className="relative w-4 h-7 rounded-[50%_50%_35%_35%/60%_60%_40%_40%] bg-gradient-to-t from-rose-500 via-amber-400 to-yellow-100 shadow-[0_0_12px_#f59e0b,0_0_24px_#fbbf24]"
-                    >
-                      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-2 h-2.5 rounded-full bg-gradient-to-t from-blue-400/90 to-white/90 blur-[0.5px]" />
-                    </motion.div>
-                  </div>
-                ) : (
-                  <div className="relative flex flex-col items-center">
-                    {[1, 2, 3].map((wisp) => (
-                      <motion.div
-                        key={wisp}
-                        initial={{ opacity: 0.85, y: 0, x: 0, scale: 0.6 }}
-                        animate={{
-                          opacity: 0,
-                          y: -38 - wisp * 14,
-                          x: (wisp % 2 === 0 ? 12 : -12) * (idx + 0.5),
-                          scale: 2.2 + wisp * 0.5,
-                        }}
-                        transition={{
-                          duration: 1.6 + wisp * 0.3,
-                          ease: "easeOut",
-                        }}
-                        className="absolute -top-2 w-2.5 h-3.5 rounded-full bg-slate-300/80 blur-[2px]"
-                      />
-                    ))}
-                  </div>
-                )}
+      <path d="M32 30 C28 12, 8 8, 6 22 C4 32, 22 38, 32 35 Z" fill="url(#pinkWingGrad)" />
+      <path d="M30 29 C27 18, 12 15, 11 23 C10 29, 22 34, 30 33 Z" fill="url(#innerWingGlow)" />
+      <path d="M32 30 C36 12, 56 8, 58 22 C60 32, 42 38, 32 35 Z" fill="url(#pinkWingGrad)" />
+      <path d="M34 29 C37 18, 52 15, 53 23 C54 29, 42 34, 34 33 Z" fill="url(#innerWingGlow)" />
+      <path d="M32 35 C20 37, 10 46, 16 56 C21 62, 30 48, 32 40 Z" fill="url(#pinkWingGrad)" />
+      <path d="M32 35 C44 37, 54 46, 48 56 C43 62, 34 48, 32 40 Z" fill="url(#pinkWingGrad)" />
 
-                <div className="w-[1.5px] h-2.5 bg-neutral-900 rounded-t-full relative z-10" />
+      <ellipse cx="32" cy="36" rx="2" ry="10" fill="#9d174d" />
+      <path d="M31 27 C28 19, 22 17, 20 18 M33 27 C36 19, 42 17, 44 18" stroke="#9d174d" strokeWidth="1.5" strokeLinecap="round" />
+      <circle cx="20" cy="18" r="1.3" fill="#be185d" />
+      <circle cx="44" cy="18" r="1.3" fill="#be185d" />
+    </svg>
+  );
+}
 
-                <div className="w-3 h-12 rounded-t-sm shadow-md relative overflow-hidden bg-gradient-to-r from-amber-50 via-white to-rose-100 border-x border-pink-200/60">
-                  <div className="absolute inset-0 flex justify-between opacity-30 px-[2px]">
-                    <div className="w-[1px] h-full bg-amber-300" />
-                    <div className="w-[1px] h-full bg-pink-300" />
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
+/* ✨ SPARKLE CURSOR TRAIL ✨ */
+function CursorSparkleTrail() {
+  const [particles, setParticles] = useState([]);
+  const [isDesktop, setIsDesktop] = useState(false);
 
-          {/* TOP CAKE TIER */}
-          <div className="w-44 h-20 rounded-t-3xl relative shadow-[inset_0_-8px_14px_rgba(0,0,0,0.1)] border-t-2 border-white/90 bg-gradient-to-r from-[#fdf2f4] via-[#fce7ea] to-[#f8d7dc] flex flex-col justify-between overflow-hidden z-20">
-            <svg
-              className="absolute top-0 left-0 w-full h-8 text-white/95 filter drop-shadow-[0_2px_2px_rgba(0,0,0,0.06)]"
-              viewBox="0 0 176 32"
-              fill="currentColor"
-              preserveAspectRatio="none"
-            >
-              <path d="M0,0 L176,0 L176,14 C162,14 158,28 144,28 C130,28 126,10 112,10 C98,10 94,24 80,24 C66,24 62,8 48,8 C34,8 30,22 16,22 C8,22 4,14 0,14 Z" />
-            </svg>
+  useEffect(() => {
+    if (window.matchMedia("(pointer: fine)").matches) {
+      setIsDesktop(true);
+    }
 
-            <div className="relative z-10 flex justify-around items-center px-4 pt-4">
-              {[1, 2, 3, 4].map((i) => (
-                <div key={i} className="relative flex items-center justify-center">
-                  <div className="w-3 h-3 rounded-full bg-gradient-to-tr from-rose-200 via-white to-rose-300 shadow-sm" />
-                  <div className="absolute -top-0.5 -right-0.5 w-1.5 h-1.5 rounded-full bg-amber-300 shadow-[0_0_4px_#fde047]" />
-                </div>
-              ))}
-            </div>
+    let lastTime = 0;
+    const handlePointerMove = (e) => {
+      const now = Date.now();
+      if (now - lastTime < 45) return;
+      lastTime = now;
 
-            <div className="w-full h-2 bg-gradient-to-r from-rose-300/30 via-rose-400/40 to-rose-300/30 blur-[1px]" />
-          </div>
+      const newParticle = {
+        id: `${now}-${Math.random()}`,
+        x: e.clientX,
+        y: e.clientY,
+        size: Math.random() > 0.5 ? "text-xs" : "text-sm",
+        char: ["✨", "💖", "🌸", "⭐"][Math.floor(Math.random() * 4)],
+        offsetX: (Math.random() - 0.5) * 14,
+      };
 
-          {/* BOTTOM CAKE TIER */}
-          <div className="w-64 h-24 rounded-2xl relative shadow-[inset_0_-10px_18px_rgba(0,0,0,0.12),0_12px_24px_rgba(244,63,94,0.12)] border-t border-white/80 bg-gradient-to-r from-[#fce7ea] via-[#fad2d8] to-[#f5b8c2] flex flex-col justify-between overflow-hidden z-10">
-            <svg
-              className="absolute top-0 left-0 w-full h-9 text-white/90 filter drop-shadow-[0_2px_3px_rgba(0,0,0,0.06)]"
-              viewBox="0 0 256 36"
-              fill="currentColor"
-              preserveAspectRatio="none"
-            >
-              <path d="M0,0 L256,0 L256,12 C240,12 234,30 216,30 C198,30 192,10 174,10 C156,10 150,26 132,26 C114,26 108,8 90,8 C72,8 66,24 48,24 C30,24 24,10 0,10 Z" />
-            </svg>
+      setParticles((prev) => [...prev.slice(-14), newParticle]);
+    };
 
-            <div className="relative z-10 flex justify-around items-center px-6 pt-5">
-              {[1, 2, 3, 4, 5].map((item, idx) => (
-                <div key={item} className="flex flex-col items-center">
-                  {idx % 2 === 0 ? (
-                    <div className="w-4 h-2.5 rounded-full bg-gradient-to-b from-rose-300 via-white to-rose-400 shadow-sm border-y border-rose-400/40" />
-                  ) : (
-                    <div className="w-2.5 h-2.5 rounded-full bg-gradient-to-tr from-amber-400 via-yellow-100 to-amber-500 shadow-[0_0_6px_#fde047]" />
-                  )}
-                </div>
-              ))}
-            </div>
+    window.addEventListener("pointermove", handlePointerMove);
+    return () => window.removeEventListener("pointermove", handlePointerMove);
+  }, []);
 
-            <div className="w-full h-3 bg-gradient-to-r from-rose-400/40 via-rose-500/50 to-rose-400/40 blur-[1px]" />
-          </div>
+  if (!isDesktop) return null;
 
-          {/* PEDESTAL */}
-          <div className="flex flex-col items-center -mt-0.5">
-            <div className="w-72 h-3.5 rounded-full bg-gradient-to-r from-amber-100 via-white to-amber-100 shadow-[0_6px_14px_rgba(0,0,0,0.12)] border-t border-amber-200 relative overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-r from-rose-300/30 via-transparent to-rose-300/30" />
-            </div>
-            <div className="w-24 h-4 bg-gradient-to-b from-white to-slate-200 shadow-md border-x border-slate-300/50 rounded-b-md" />
-            <div className="w-40 h-2 bg-gradient-to-r from-slate-200 via-white to-slate-200 rounded-full shadow-lg" />
-          </div>
-
-          {/* BLOW CANDLE ACTION BUTTON */}
-          <motion.div
-            whileHover={{ scale: 1.04 }}
-            whileTap={{ scale: 0.96 }}
-            className={`mt-6 px-7 py-3 rounded-full font-bold text-xs uppercase tracking-widest transition-all duration-500 flex items-center gap-2.5 shadow-md ${
-              candlesBlown
-                ? "bg-emerald-500 text-white shadow-emerald-200/50 border border-emerald-400"
-                : "bg-gradient-to-r from-rose-500 via-pink-500 to-rose-500 text-white shadow-rose-300/50 border border-rose-300 animate-pulse"
-            }`}
+  return (
+    <div className="fixed inset-0 pointer-events-none z-50 overflow-hidden select-none">
+      <AnimatePresence>
+        {particles.map((p) => (
+          <motion.span
+            key={p.id}
+            initial={{ opacity: 1, scale: 1, x: p.x + p.offsetX, y: p.y }}
+            animate={{ opacity: 0, scale: 0.3, y: p.y - 24 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.65, ease: "easeOut" }}
+            className={`fixed ${p.size} filter drop-shadow-[0_0_4px_rgba(255,182,193,0.8)]`}
+            style={{ left: 0, top: 0 }}
           >
-            {candlesBlown ? (
-              <>
-                <span>✨</span>
-                <span>Wishes Whispered To The Stars</span>
-                <span>✨</span>
-              </>
-            ) : (
-              <>
-                <span>🕯️</span>
-                <span>Tap the candles to blow!</span>
-                <span>💨</span>
-              </>
-            )}
-          </motion.div>
-        </div>
+            {p.char}
+          </motion.span>
+        ))}
+      </AnimatePresence>
+    </div>
+  );
+}
 
-        <AnimatePresence>
-          {candlesBlown && (
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              className="mt-4 p-4 rounded-2xl bg-white/90 border border-rose-200/80 shadow-sm max-w-md"
-            >
-              <p className="text-xl md:text-2xl font-serif italic text-rose-600 font-semibold">
-                "May every silent wish you made today turn into reality." ❤️✨
-              </p>
-            </motion.div>
+export default function App() {
+  const [currentStep, setCurrentStep] = useState(1);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const audioRef = useRef(null);
+
+  const isScrapbook = currentStep === 2;
+  const isNightSky = currentStep === 3;
+  const isGrandFinale = currentStep === 4;
+
+  useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.volume = 0.35;
+    }
+  }, []);
+
+  const handleNextStep = () => {
+    setCurrentStep((prev) => prev + 1);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  return (
+    <div
+      className={`min-h-screen w-full relative transition-colors duration-1000 flex flex-col justify-center items-center overflow-x-hidden ${
+        isNightSky
+          ? "bg-gradient-to-b from-[#0f0c1b] via-[#1a102f] to-[#241442] text-white"
+          : isGrandFinale
+          ? "bg-gradient-to-br from-rose-50 via-[#fff5f6] to-pink-100 text-slate-800"
+          : isScrapbook
+          ? "bg-gradient-to-br from-[#fff3f5] via-[#fef7ee] to-[#fdeef2] text-slate-800"
+          : "bg-gradient-to-br from-pink-100 via-purple-50 to-pink-50 text-slate-800"
+      }`}
+    >
+      <CursorSparkleTrail />
+
+      {/* 🌸 LUXURY FLORAL & BOTANICAL SURROUNDS ON GRAND FINALE (STEP 4) 🌸 */}
+      {isGrandFinale && (
+        <>
+          <LuxuryFloralArch position="left" />
+          <LuxuryFloralArch position="right" />
+          <LuxuryFloatingPetals />
+        </>
+      )}
+
+      {/* Floating Audio Controller */}
+      <MusicControl
+        audioRef={audioRef}
+        isPlaying={isPlaying}
+        setIsPlaying={setIsPlaying}
+      />
+
+      <main className="w-full max-w-lg md:max-w-2xl min-h-screen flex flex-col items-center justify-center p-2 md:p-4 relative z-10">
+        <AnimatePresence mode="wait">
+          {currentStep === 1 && (
+            <OpeningScreen
+              key="opening"
+              onComplete={handleNextStep}
+              setIsPlaying={setIsPlaying}
+              audioRef={audioRef}
+              name={FRIEND_DATA.name}
+            />
+          )}
+
+          {currentStep === 2 && (
+            <PhotoGallery
+              key="gallery"
+              onComplete={handleNextStep}
+            />
+          )}
+
+          {currentStep === 3 && (
+            <FinalLetter
+              key="final-letter"
+              onComplete={handleNextStep}
+              name={FRIEND_DATA.name}
+            />
+          )}
+
+          {currentStep === 4 && (
+            <FinalSurprise
+              key="grand-surprise"
+              name={FRIEND_DATA.name}
+            />
           )}
         </AnimatePresence>
-      </div>
-
-      {/* 3. SISTERLY BIRTHDAY WISHES CARD */}
-      <div className="w-full bg-white/80 backdrop-blur-xl rounded-3xl p-7 shadow-[0_20px_50px_rgba(244,63,94,0.1)] border border-white/70 mb-8 text-left relative overflow-hidden">
-        <h3 className="text-lg md:text-xl font-bold text-rose-950 mb-4 text-center font-serif">
-          I hope this new year brings you everything you deserve, sister. 🤍
-        </h3>
-
-        <div className="flex flex-col gap-2.5 font-medium text-slate-700 text-sm md:text-base pl-2">
-          <p className="flex items-center gap-2">
-            <span>🌸</span> <span>Peace of mind and good health always.</span>
-          </p>
-          <p className="flex items-center gap-2">
-            <span>📸</span> <span>More unforgettable memories and spontaneous trips.</span>
-          </p>
-          <p className="flex items-center gap-2">
-            <span>🎯</span> <span>Big success in everything you're working toward.</span>
-          </p>
-          <p className="flex items-center gap-2">
-            <span>😊</span> <span>Countless reasons to laugh till your stomach hurts.</span>
-          </p>
-          <p className="flex items-center gap-2">
-            <span>✨</span> <span>The confidence to never doubt your worth.</span>
-          </p>
-          <p className="pt-2 text-rose-400 font-serif italic text-sm">And of course...</p>
-          <p className="text-rose-600 font-bold">
-            😂 Many more years of having to tolerate your favorite brother!
-          </p>
-        </div>
-
-        <div className="text-center mt-6 pt-4 border-t border-rose-100">
-          <p className="text-xl md:text-2xl font-black bg-gradient-to-r from-rose-500 to-pink-600 bg-clip-text text-transparent">
-            🌸 HAPPIEST BIRTHDAY TO THE BEST SISTER & BEST FRIEND! 🎂✨
-          </p>
-        </div>
-      </div>
-
-      {/* 4. PREMIUM GLASS COUNTDOWN TO NEXT YEAR */}
-      <div className="w-full rounded-3xl p-6 md:p-8 bg-gradient-to-br from-rose-500/95 via-pink-500/95 to-rose-600/95 backdrop-blur-xl text-white shadow-2xl flex flex-col items-center relative overflow-hidden border border-rose-300/40">
-        <span className="text-xs font-bold uppercase tracking-widest bg-white/20 px-4 py-1.5 rounded-full mb-3 backdrop-blur-md">
-          👀 See You Next Year...
-        </span>
-
-        <h4 className="text-lg md:text-xl font-bold mb-4 font-serif">
-          🎂 Your Next Birthday Begins In:
-        </h4>
-
-        {/* 4-Box Digital Clock Grid */}
-        <div className="grid grid-cols-4 gap-2 md:gap-4 w-full max-w-md">
-          {/* Days */}
-          <div className="flex flex-col items-center bg-white/15 backdrop-blur-md rounded-2xl py-3 px-1 border border-white/25 shadow-inner">
-            <span className="text-2xl md:text-4xl font-black tracking-tight tabular-nums">
-              {formatNumber(timeLeft.days)}
-            </span>
-            <span className="text-[10px] md:text-xs font-semibold uppercase tracking-wider text-pink-100 mt-1">
-              Days
-            </span>
-          </div>
-
-          {/* Hours */}
-          <div className="flex flex-col items-center bg-white/15 backdrop-blur-md rounded-2xl py-3 px-1 border border-white/25 shadow-inner">
-            <span className="text-2xl md:text-4xl font-black tracking-tight tabular-nums">
-              {formatNumber(timeLeft.hours)}
-            </span>
-            <span className="text-[10px] md:text-xs font-semibold uppercase tracking-wider text-pink-100 mt-1">
-              Hours
-            </span>
-          </div>
-
-          {/* Minutes */}
-          <div className="flex flex-col items-center bg-white/15 backdrop-blur-md rounded-2xl py-3 px-1 border border-white/25 shadow-inner">
-            <span className="text-2xl md:text-4xl font-black tracking-tight tabular-nums">
-              {formatNumber(timeLeft.minutes)}
-            </span>
-            <span className="text-[10px] md:text-xs font-semibold uppercase tracking-wider text-pink-100 mt-1">
-              Mins
-            </span>
-          </div>
-
-          {/* Seconds */}
-          <div className="flex flex-col items-center bg-white/25 backdrop-blur-md rounded-2xl py-3 px-1 border border-white/40 shadow-inner ring-2 ring-white/30">
-            <span className="text-2xl md:text-4xl font-black tracking-tight tabular-nums text-yellow-200">
-              {formatNumber(timeLeft.seconds)}
-            </span>
-            <span className="text-[10px] md:text-xs font-semibold uppercase tracking-wider text-pink-100 mt-1">
-              Secs
-            </span>
-          </div>
-        </div>
-
-        <p className="text-sm md:text-base font-semibold italic mt-4 text-pink-100">
-          Until then... I'll continue annoying you 😂💗
-        </p>
-
-        <div className="flex items-center gap-1.5 mt-4 text-xs opacity-90">
-          <Heart size={14} className="fill-white" />
-          <span className="font-semibold">Best Friends Forever</span>
-          <Heart size={14} className="fill-white" />
-        </div>
-      </div>
-    </motion.div>
+      </main>
+    </div>
   );
 }

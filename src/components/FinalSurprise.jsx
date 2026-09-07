@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import confetti from "canvas-confetti";
-import { Heart } from "lucide-react";
+import { Heart, Sparkles } from "lucide-react";
 
-export default function FinalSurprise({ name }) {
+export default function FinalSurprise({ name = "Ditya" }) {
   const [candlesBlown, setCandlesBlown] = useState(false);
   const [timeLeft, setTimeLeft] = useState({
     days: 0,
@@ -42,7 +42,6 @@ export default function FinalSurprise({ name }) {
   useEffect(() => {
     const calculateCountdown = () => {
       const now = new Date();
-      // Target is explicitly September 8, 2027 at 00:00:00
       const target = new Date("2027-09-08T00:00:00");
       const diff = target - now;
 
@@ -71,10 +70,10 @@ export default function FinalSurprise({ name }) {
     setCandlesBlown(true);
 
     confetti({
-      particleCount: 170,
-      spread: 100,
+      particleCount: 180,
+      spread: 90,
       origin: { y: 0.5 },
-      colors: ["#f43f5e", "#fb7185", "#ffd700", "#fff", "#fbcfe8"],
+      colors: ["#f43f5e", "#fb7185", "#ffd700", "#ffffff", "#fbcfe8"],
     });
   };
 
@@ -82,50 +81,84 @@ export default function FinalSurprise({ name }) {
 
   return (
     <motion.div
-      initial={{ opacity: 0, scale: 0.92 }}
+      initial={{ opacity: 0, scale: 0.96 }}
       animate={{ opacity: 1, scale: 1 }}
-      transition={{ duration: 0.8 }}
-      className="w-full flex flex-col items-center py-6 px-3 text-center relative max-w-xl mx-auto"
+      transition={{ duration: 0.9 }}
+      className="w-full flex flex-col items-center py-6 px-3 text-center relative max-w-xl mx-auto z-10"
     >
-      {/* 6. GRAND HAPPY BIRTHDAY TITLE */}
+      {/* 🌸 Ambient Background Glow & Floating Sparkles */}
+      <div className="fixed inset-0 pointer-events-none -z-10 overflow-hidden">
+        <div className="absolute top-10 left-1/2 -translate-x-1/2 w-[34rem] h-[34rem] bg-rose-200/40 rounded-full blur-3xl" />
+        <div className="absolute bottom-20 left-1/4 w-80 h-80 bg-pink-200/30 rounded-full blur-3xl" />
+        
+        {/* Organic Floating Elements */}
+        {[...Array(12)].map((_, i) => (
+          <motion.div
+            key={i}
+            className="absolute text-rose-300/60 select-none text-xl md:text-2xl"
+            style={{
+              left: `${(i * 9 + 4) % 94}%`,
+              top: `${(i * 13 + 5) % 90}%`,
+            }}
+            animate={{
+              y: [0, -18, 0],
+              x: [0, i % 2 === 0 ? 10 : -10, 0],
+              rotate: [0, 20, 0],
+              opacity: [0.3, 0.75, 0.3],
+            }}
+            transition={{
+              duration: 4 + (i % 4),
+              repeat: Infinity,
+              ease: "easeInOut",
+              delay: i * 0.4,
+            }}
+          >
+            {["🌸", "✨", "🌷", "🪷", "💖"][i % 5]}
+          </motion.div>
+        ))}
+      </div>
+
+      {/* 1. EDITORIAL HEADER */}
       <motion.div
-        initial={{ y: -30, opacity: 0 }}
+        initial={{ y: -25, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.8 }}
-        className="mb-8"
+        className="mb-8 flex flex-col items-center"
       >
-        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-rose-100/90 border border-rose-200 text-rose-600 font-bold text-xs uppercase tracking-widest mb-3 shadow-sm">
-          <span>🌹</span>
+        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/70 border border-rose-200/70 text-rose-600 font-bold text-xs uppercase tracking-widest mb-4 shadow-sm backdrop-blur-md">
+          <Sparkles className="w-3.5 h-3.5 text-rose-400" />
           <span>A Special Day For A Special Person</span>
-          <span>🪷</span>
+          <Sparkles className="w-3.5 h-3.5 text-rose-400" />
         </div>
 
-        <h1 className="text-4xl md:text-6xl font-black text-rose-500 tracking-tight my-1 drop-shadow-sm">
-          HAPPYYYY BIRTHDAYYYY
-              DITYAAAA
+        <h1 className="font-serif italic text-4xl sm:text-5xl md:text-6xl text-rose-900 tracking-tight leading-tight">
+          Happy Birthday,{" "}
+          <span className="not-italic font-bold bg-gradient-to-r from-rose-500 via-pink-600 to-purple-600 bg-clip-text text-transparent block sm:inline mt-1 sm:mt-0 drop-shadow-sm">
+            Ditya
+          </span>{" "}
+          ✨
         </h1>
-        <h2 className="text-3xl md:text-5xl font-extrabold text-pink-600 font-handwriting">
-        </h2>
-        <p className="text-sm md:text-base font-bold text-slate-600 mt-3 italic bg-white/85 backdrop-blur-md py-1.5 px-5 rounded-full border border-pink-200 inline-block shadow-sm">
-          Another year older... But unfortunately, still as crazy 😂💗
+
+        <p className="text-sm md:text-base font-medium text-rose-800/90 mt-4 italic bg-white/70 backdrop-blur-md py-1.5 px-6 rounded-full border border-rose-200/60 shadow-xs inline-flex items-center gap-2">
+          <span>Another year older... But unfortunately, still as crazy 😂💗</span>
         </p>
       </motion.div>
 
-      {/* 7. LUXURY ARTISANAL BIRTHDAY CAKE */}
-      <div className="w-full bg-gradient-to-b from-white/95 via-rose-50/70 to-white/95 backdrop-blur-md rounded-3xl p-6 md:p-8 shadow-2xl border border-rose-200/80 mb-8 flex flex-col items-center relative overflow-hidden">
-        <div className="absolute top-3 left-4 text-xs font-serif text-rose-400/80 tracking-widest uppercase">
+      {/* 2. ARTISANAL PATISSERIE BIRTHDAY CAKE */}
+      <div className="w-full bg-white/80 backdrop-blur-xl rounded-3xl p-6 md:p-8 shadow-[0_20px_50px_rgba(244,63,94,0.12)] border border-white/70 mb-8 flex flex-col items-center relative overflow-hidden">
+        <div className="absolute top-4 left-5 text-[11px] font-mono tracking-widest text-rose-400/80 uppercase">
           ✧ Patisserie Royale ✧
         </div>
-        <div className="absolute top-3 right-4 flex gap-1 text-xs text-amber-400">
+        <div className="absolute top-4 right-5 flex gap-1 text-xs text-amber-400">
           ✨✨
         </div>
 
         <div className="mt-4 mb-2">
-          <h3 className="text-2xl md:text-3xl font-bold text-pink-600 flex items-center justify-center gap-2">
-  <span>Make A Wish...</span>
-  <span>💫</span>
-</h3>
-          <p className="text-xs md:text-sm text-slate-500 font-medium mt-1">
+          <h3 className="text-2xl md:text-3xl font-serif italic text-rose-700 flex items-center justify-center gap-2">
+            <span>Make A Wish...</span>
+            <span className="not-italic">💫</span>
+          </h3>
+          <p className="text-xs md:text-sm text-slate-500 font-normal mt-1">
             Close your eyes for a second, hold that wish close to your heart 💗
           </p>
         </div>
@@ -135,17 +168,17 @@ export default function FinalSurprise({ name }) {
           onClick={handleBlowCandles}
           className="relative cursor-pointer group flex flex-col items-center pt-8 pb-4 select-none"
         >
-          {/* Ambient Candlelight Reflection */}
+          {/* Ambient Candlelight Warmth */}
           <motion.div
             animate={{
-              opacity: candlesBlown ? 0 : [0.65, 0.95, 0.7, 0.9, 0.65],
-              scale: candlesBlown ? 0.8 : [1, 1.05, 0.98, 1.03, 1],
+              opacity: candlesBlown ? 0 : [0.6, 0.95, 0.65, 0.9, 0.6],
+              scale: candlesBlown ? 0.7 : [1, 1.08, 0.96, 1.04, 1],
             }}
             transition={{ duration: 1.2, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute top-12 w-44 h-16 rounded-full bg-gradient-to-b from-amber-300/40 via-yellow-200/20 to-transparent blur-xl pointer-events-none z-20"
+            className="absolute top-10 w-48 h-20 rounded-full bg-gradient-to-b from-amber-300/40 via-yellow-200/20 to-transparent blur-xl pointer-events-none z-20"
           />
 
-          {/* 3 SLENDER ARTISANAL CANDLES */}
+          {/* 3 ARTISANAL CANDLES */}
           <div className="flex gap-8 mb-[-4px] z-30 relative">
             {[1, 2, 3].map((candle, idx) => (
               <div key={candle} className="flex flex-col items-center relative">
@@ -153,8 +186,8 @@ export default function FinalSurprise({ name }) {
                   <div className="relative flex flex-col items-center">
                     <motion.div
                       animate={{
-                        opacity: [0.5, 0.85, 0.55, 0.8, 0.5],
-                        scale: [1, 1.15, 0.95, 1.1, 1],
+                        opacity: [0.5, 0.9, 0.5],
+                        scale: [1, 1.15, 1],
                       }}
                       transition={{
                         duration: 0.8 + idx * 0.15,
@@ -204,7 +237,7 @@ export default function FinalSurprise({ name }) {
 
                 <div className="w-[1.5px] h-2.5 bg-neutral-900 rounded-t-full relative z-10" />
 
-                <div className="w-3 h-12 rounded-t-sm shadow-md relative overflow-hidden bg-gradient-to-r from-amber-100 via-white to-pink-200 border-x border-pink-200/60">
+                <div className="w-3 h-12 rounded-t-sm shadow-md relative overflow-hidden bg-gradient-to-r from-amber-50 via-white to-rose-100 border-x border-pink-200/60">
                   <div className="absolute inset-0 flex justify-between opacity-30 px-[2px]">
                     <div className="w-[1px] h-full bg-amber-300" />
                     <div className="w-[1px] h-full bg-pink-300" />
@@ -215,7 +248,7 @@ export default function FinalSurprise({ name }) {
           </div>
 
           {/* TOP CAKE TIER */}
-          <div className="w-44 h-20 rounded-t-3xl relative shadow-[inset_0_-8px_14px_rgba(0,0,0,0.12)] border-t-2 border-white/90 bg-gradient-to-r from-[#fdf2f4] via-[#fce7ea] to-[#f8d7dc] flex flex-col justify-between overflow-hidden z-20">
+          <div className="w-44 h-20 rounded-t-3xl relative shadow-[inset_0_-8px_14px_rgba(0,0,0,0.1)] border-t-2 border-white/90 bg-gradient-to-r from-[#fdf2f4] via-[#fce7ea] to-[#f8d7dc] flex flex-col justify-between overflow-hidden z-20">
             <svg
               className="absolute top-0 left-0 w-full h-8 text-white/95 filter drop-shadow-[0_2px_2px_rgba(0,0,0,0.06)]"
               viewBox="0 0 176 32"
@@ -238,7 +271,7 @@ export default function FinalSurprise({ name }) {
           </div>
 
           {/* BOTTOM CAKE TIER */}
-          <div className="w-64 h-24 rounded-2xl relative shadow-[inset_0_-10px_18px_rgba(0,0,0,0.15),0_12px_24px_rgba(244,63,94,0.15)] border-t border-white/80 bg-gradient-to-r from-[#fce7ea] via-[#fad2d8] to-[#f5b8c2] flex flex-col justify-between overflow-hidden z-10">
+          <div className="w-64 h-24 rounded-2xl relative shadow-[inset_0_-10px_18px_rgba(0,0,0,0.12),0_12px_24px_rgba(244,63,94,0.12)] border-t border-white/80 bg-gradient-to-r from-[#fce7ea] via-[#fad2d8] to-[#f5b8c2] flex flex-col justify-between overflow-hidden z-10">
             <svg
               className="absolute top-0 left-0 w-full h-9 text-white/90 filter drop-shadow-[0_2px_3px_rgba(0,0,0,0.06)]"
               viewBox="0 0 256 36"
@@ -265,21 +298,21 @@ export default function FinalSurprise({ name }) {
 
           {/* PEDESTAL */}
           <div className="flex flex-col items-center -mt-0.5">
-            <div className="w-72 h-3.5 rounded-full bg-gradient-to-r from-amber-100 via-white to-amber-100 shadow-[0_6px_14px_rgba(0,0,0,0.14)] border-t border-amber-200 relative overflow-hidden">
+            <div className="w-72 h-3.5 rounded-full bg-gradient-to-r from-amber-100 via-white to-amber-100 shadow-[0_6px_14px_rgba(0,0,0,0.12)] border-t border-amber-200 relative overflow-hidden">
               <div className="absolute inset-0 bg-gradient-to-r from-rose-300/30 via-transparent to-rose-300/30" />
             </div>
             <div className="w-24 h-4 bg-gradient-to-b from-white to-slate-200 shadow-md border-x border-slate-300/50 rounded-b-md" />
             <div className="w-40 h-2 bg-gradient-to-r from-slate-200 via-white to-slate-200 rounded-full shadow-lg" />
           </div>
 
-          {/* BUTTON */}
+          {/* BLOW CANDLE ACTION BUTTON */}
           <motion.div
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className={`mt-6 px-6 py-2.5 rounded-full font-bold text-xs uppercase tracking-widest transition-all duration-500 flex items-center gap-2 shadow-lg ${
+            whileHover={{ scale: 1.04 }}
+            whileTap={{ scale: 0.96 }}
+            className={`mt-6 px-7 py-3 rounded-full font-bold text-xs uppercase tracking-widest transition-all duration-500 flex items-center gap-2.5 shadow-md ${
               candlesBlown
-                ? "bg-emerald-500 text-white shadow-emerald-200 border border-emerald-400"
-                : "bg-gradient-to-r from-rose-500 to-pink-500 text-white shadow-rose-300 border border-rose-300 animate-pulse"
+                ? "bg-emerald-500 text-white shadow-emerald-200/50 border border-emerald-400"
+                : "bg-gradient-to-r from-rose-500 via-pink-500 to-rose-500 text-white shadow-rose-300/50 border border-rose-300 animate-pulse"
             }`}
           >
             {candlesBlown ? (
@@ -291,7 +324,7 @@ export default function FinalSurprise({ name }) {
             ) : (
               <>
                 <span>🕯️</span>
-                <span>Click the candles to blow!</span>
+                <span>Tap the candles to blow!</span>
                 <span>💨</span>
               </>
             )}
@@ -304,9 +337,9 @@ export default function FinalSurprise({ name }) {
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
-              className="mt-4 p-4 rounded-2xl bg-white/80 border border-rose-200 shadow-sm max-w-md"
+              className="mt-4 p-4 rounded-2xl bg-white/90 border border-rose-200/80 shadow-sm max-w-md"
             >
-              <p className="text-xl md:text-2xl font-bold text-rose-500 font-handwriting">
+              <p className="text-xl md:text-2xl font-serif italic text-rose-600 font-semibold">
                 "May every silent wish you made today turn into reality." ❤️✨
               </p>
             </motion.div>
@@ -314,39 +347,44 @@ export default function FinalSurprise({ name }) {
         </AnimatePresence>
       </div>
 
-      {/* 8. SISTERLY BIRTHDAY MESSAGE */}
-<div className="w-full bg-white/90 backdrop-blur-md rounded-3xl p-6 shadow-xl border border-pink-200 mb-8 text-left relative overflow-hidden">
-  <h3 className="text-lg md:text-xl font-bold text-slate-800 mb-3 text-center font-serif">
-    I hope this new year brings you everything you deserve, sister. 🤍
-  </h3>
+      {/* 3. SISTERLY BIRTHDAY WISHES CARD */}
+      <div className="w-full bg-white/80 backdrop-blur-xl rounded-3xl p-7 shadow-[0_20px_50px_rgba(244,63,94,0.1)] border border-white/70 mb-8 text-left relative overflow-hidden">
+        <h3 className="text-lg md:text-xl font-bold text-rose-950 mb-4 text-center font-serif">
+          I hope this new year brings you everything you deserve, sister. 🤍
+        </h3>
 
-  <div className="flex flex-col gap-2 font-semibold text-slate-700 text-sm md:text-base pl-2">
-    <p>🌸 Peace of mind and good health always.</p>
-    <p>📸 More unforgettable memories and trips.</p>
-    <p>🎯 Big success in everything you're working toward.</p>
-    <p>😊 Countless reasons to laugh till your stomach hurts.</p>
-    <p>✨ The confidence to never doubt your worth.</p>
-    <p className="pt-2 text-slate-500 font-medium">And of course...</p>
-    <p className="text-pink-600 font-bold">
-      😂 Many more years of having to tolerate me!
-    </p>
-  </div>
+        <div className="flex flex-col gap-2.5 font-medium text-slate-700 text-sm md:text-base pl-2">
+          <p className="flex items-center gap-2">
+            <span>🌸</span> <span>Peace of mind and good health always.</span>
+          </p>
+          <p className="flex items-center gap-2">
+            <span>📸</span> <span>More unforgettable memories and spontaneous trips.</span>
+          </p>
+          <p className="flex items-center gap-2">
+            <span>🎯</span> <span>Big success in everything you're working toward.</span>
+          </p>
+          <p className="flex items-center gap-2">
+            <span>😊</span> <span>Countless reasons to laugh till your stomach hurts.</span>
+          </p>
+          <p className="flex items-center gap-2">
+            <span>✨</span> <span>The confidence to never doubt your worth.</span>
+          </p>
+          <p className="pt-2 text-rose-400 font-serif italic text-sm">And of course...</p>
+          <p className="text-rose-600 font-bold">
+            😂 Many more years of having to tolerate your favorite brother!
+          </p>
+        </div>
 
-  <div className="text-center mt-6 pt-4 border-t border-pink-100">
-    <p className="text-xl md:text-2xl font-black text-pink-600">
-      🌸 HAPPIESTTTTT BIRTHDAYYYYY TO THE BEST SISTER & BEST FRIEND! 🎂✨
-    </p>
-    <p className="text-sm font-handwriting text-slate-500 font-bold mt-1 text-base">
-    </p>
-  </div>
-</div>
+        <div className="text-center mt-6 pt-4 border-t border-rose-100">
+          <p className="text-xl md:text-2xl font-black bg-gradient-to-r from-rose-500 to-pink-600 bg-clip-text text-transparent">
+            🌸 HAPPIEST BIRTHDAY TO THE BEST SISTER & BEST FRIEND! 🎂✨
+          </p>
+        </div>
+      </div>
 
-      {/* 9. REAL-TIME COUNTDOWN TO NEXT YEAR'S BIRTHDAY (SEPTEMBER 8, 2027) */}
-      <div className="w-full rounded-3xl p-6 md:p-8 bg-gradient-to-br from-rose-500 via-pink-500 to-rose-600 text-white shadow-2xl flex flex-col items-center relative overflow-hidden border border-rose-300/40">
-        <div className="absolute -top-3 -right-3 text-2xl opacity-40">🌸</div>
-        <div className="absolute -bottom-3 -left-3 text-2xl opacity-40">🪷</div>
-
-        <span className="text-xs font-black uppercase tracking-widest bg-white/20 px-4 py-1.5 rounded-full mb-2 backdrop-blur-sm">
+      {/* 4. PREMIUM GLASS COUNTDOWN TO NEXT YEAR */}
+      <div className="w-full rounded-3xl p-6 md:p-8 bg-gradient-to-br from-rose-500/95 via-pink-500/95 to-rose-600/95 backdrop-blur-xl text-white shadow-2xl flex flex-col items-center relative overflow-hidden border border-rose-300/40">
+        <span className="text-xs font-bold uppercase tracking-widest bg-white/20 px-4 py-1.5 rounded-full mb-3 backdrop-blur-md">
           👀 See You Next Year...
         </span>
 
@@ -357,47 +395,47 @@ export default function FinalSurprise({ name }) {
         {/* 4-Box Digital Clock Grid */}
         <div className="grid grid-cols-4 gap-2 md:gap-4 w-full max-w-md">
           {/* Days */}
-          <div className="flex flex-col items-center bg-white/20 backdrop-blur-md rounded-2xl py-3 px-1 border border-white/30 shadow-inner">
+          <div className="flex flex-col items-center bg-white/15 backdrop-blur-md rounded-2xl py-3 px-1 border border-white/25 shadow-inner">
             <span className="text-2xl md:text-4xl font-black tracking-tight tabular-nums">
               {formatNumber(timeLeft.days)}
             </span>
-            <span className="text-[10px] md:text-xs font-bold uppercase tracking-wider text-pink-100 mt-1">
+            <span className="text-[10px] md:text-xs font-semibold uppercase tracking-wider text-pink-100 mt-1">
               Days
             </span>
           </div>
 
           {/* Hours */}
-          <div className="flex flex-col items-center bg-white/20 backdrop-blur-md rounded-2xl py-3 px-1 border border-white/30 shadow-inner">
+          <div className="flex flex-col items-center bg-white/15 backdrop-blur-md rounded-2xl py-3 px-1 border border-white/25 shadow-inner">
             <span className="text-2xl md:text-4xl font-black tracking-tight tabular-nums">
               {formatNumber(timeLeft.hours)}
             </span>
-            <span className="text-[10px] md:text-xs font-bold uppercase tracking-wider text-pink-100 mt-1">
+            <span className="text-[10px] md:text-xs font-semibold uppercase tracking-wider text-pink-100 mt-1">
               Hours
             </span>
           </div>
 
           {/* Minutes */}
-          <div className="flex flex-col items-center bg-white/20 backdrop-blur-md rounded-2xl py-3 px-1 border border-white/30 shadow-inner">
+          <div className="flex flex-col items-center bg-white/15 backdrop-blur-md rounded-2xl py-3 px-1 border border-white/25 shadow-inner">
             <span className="text-2xl md:text-4xl font-black tracking-tight tabular-nums">
               {formatNumber(timeLeft.minutes)}
             </span>
-            <span className="text-[10px] md:text-xs font-bold uppercase tracking-wider text-pink-100 mt-1">
+            <span className="text-[10px] md:text-xs font-semibold uppercase tracking-wider text-pink-100 mt-1">
               Mins
             </span>
           </div>
 
           {/* Seconds */}
-          <div className="flex flex-col items-center bg-white/30 backdrop-blur-md rounded-2xl py-3 px-1 border border-white/40 shadow-inner ring-2 ring-white/30">
+          <div className="flex flex-col items-center bg-white/25 backdrop-blur-md rounded-2xl py-3 px-1 border border-white/40 shadow-inner ring-2 ring-white/30">
             <span className="text-2xl md:text-4xl font-black tracking-tight tabular-nums text-yellow-200">
               {formatNumber(timeLeft.seconds)}
             </span>
-            <span className="text-[10px] md:text-xs font-bold uppercase tracking-wider text-pink-100 mt-1">
+            <span className="text-[10px] md:text-xs font-semibold uppercase tracking-wider text-pink-100 mt-1">
               Secs
             </span>
           </div>
         </div>
 
-        <p className="text-sm md:text-base font-bold italic mt-4 text-pink-100">
+        <p className="text-sm md:text-base font-semibold italic mt-4 text-pink-100">
           Until then... I'll continue annoying you 😂💗
         </p>
 

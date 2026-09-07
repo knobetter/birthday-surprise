@@ -435,7 +435,6 @@ export default function PhotoGallery({ onComplete }) {
           A Little Scrapbook of You 🎀
         </h2>
         <p className="text-sm md:text-base font-semibold text-slate-600 italic max-w-md mx-auto">
-          The best times, the wildest moments, and every single memory I cherish ✨
         </p>
       </div>
 

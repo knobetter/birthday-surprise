@@ -11,7 +11,203 @@ export const FRIEND_DATA = {
   nextBirthday: "2027-09-08T00:00:00",
 };
 
-// Warm Glowing Hanging Fairy Lights (Luxury Filament Bulbs)
+/* 💡 OPTION 3: VERTICAL SUSPENDED FAIRY LIGHT CASCADES 💡 */
+function VerticalFairyLightCascades() {
+  const leftStrands = [
+    { left: "2.5%", length: "72vh", bulbs: [0.15, 0.35, 0.55, 0.72] },
+    { left: "6.5%", length: "54vh", bulbs: [0.2, 0.42, 0.6] },
+  ];
+
+  const rightStrands = [
+    { right: "2.5%", length: "72vh", bulbs: [0.18, 0.38, 0.58, 0.74] },
+    { right: "6.5%", length: "54vh", bulbs: [0.22, 0.45, 0.62] },
+  ];
+
+  return (
+    <div className="hidden lg:block fixed inset-0 pointer-events-none z-10 overflow-hidden select-none">
+      {/* Left Strands */}
+      {leftStrands.map((strand, sIdx) => (
+        <div
+          key={`l-strand-${sIdx}`}
+          className="absolute top-0 flex flex-col items-center"
+          style={{ left: strand.left, height: strand.length }}
+        >
+          <div className="w-[1px] h-full bg-gradient-to-b from-amber-400/40 via-amber-300/25 to-transparent relative">
+            {strand.bulbs.map((pos, bIdx) => (
+              <motion.div
+                key={bIdx}
+                style={{ top: `${pos * 100}%` }}
+                animate={{
+                  opacity: [0.55, 1, 0.65, 0.95, 0.55],
+                  scale: [0.92, 1.12, 0.95, 1.08, 0.92],
+                  boxShadow: [
+                    "0 0 6px #f59e0b",
+                    "0 0 16px #fbbf24, 0 0 28px #f59e0b",
+                    "0 0 8px #f59e0b",
+                    "0 0 14px #fbbf24",
+                    "0 0 6px #f59e0b",
+                  ],
+                }}
+                transition={{
+                  duration: 2.2 + (sIdx + bIdx) * 0.4,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                  delay: (sIdx * 2 + bIdx) * 0.3,
+                }}
+                className="absolute -left-[4px] w-2.5 h-3.5 rounded-full bg-gradient-to-b from-amber-100 via-amber-200 to-yellow-400"
+              />
+            ))}
+          </div>
+        </div>
+      ))}
+
+      {/* Right Strands */}
+      {rightStrands.map((strand, sIdx) => (
+        <div
+          key={`r-strand-${sIdx}`}
+          className="absolute top-0 flex flex-col items-center"
+          style={{ right: strand.right, height: strand.length }}
+        >
+          <div className="w-[1px] h-full bg-gradient-to-b from-amber-400/40 via-amber-300/25 to-transparent relative">
+            {strand.bulbs.map((pos, bIdx) => (
+              <motion.div
+                key={bIdx}
+                style={{ top: `${pos * 100}%` }}
+                animate={{
+                  opacity: [0.55, 1, 0.65, 0.95, 0.55],
+                  scale: [0.92, 1.12, 0.95, 1.08, 0.92],
+                  boxShadow: [
+                    "0 0 6px #f59e0b",
+                    "0 0 16px #fbbf24, 0 0 28px #f59e0b",
+                    "0 0 8px #f59e0b",
+                    "0 0 14px #fbbf24",
+                    "0 0 6px #f59e0b",
+                  ],
+                }}
+                transition={{
+                  duration: 2.5 + (sIdx + bIdx) * 0.35,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                  delay: 0.5 + (sIdx * 2 + bIdx) * 0.3,
+                }}
+                className="absolute -left-[4px] w-2.5 h-3.5 rounded-full bg-gradient-to-b from-amber-100 via-amber-200 to-yellow-400"
+              />
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+/* 🎈 OPTION 4: LUXURY FLOATING PASTEL HELIUM BALLOONS WITH RIBBONS 🎈 */
+function PastelHeliumBalloons({ side = "left" }) {
+  const isLeft = side === "left";
+
+  const balloons = [
+    {
+      color: "from-rose-200/90 via-pink-300/80 to-rose-400/80",
+      highlight: "from-white/80 to-transparent",
+      w: 68,
+      h: 84,
+      yOff: 0,
+      xOff: isLeft ? 10 : -10,
+      rotate: isLeft ? -8 : 8,
+      dur: 6,
+    },
+    {
+      color: "from-amber-100/95 via-amber-200/85 to-yellow-300/70",
+      highlight: "from-white/90 to-transparent",
+      w: 62,
+      h: 78,
+      yOff: -38,
+      xOff: isLeft ? 48 : -48,
+      rotate: isLeft ? 6 : -6,
+      dur: 5.2,
+    },
+    {
+      color: "from-white/95 via-rose-100/90 to-pink-200/85",
+      highlight: "from-white to-transparent",
+      w: 58,
+      h: 74,
+      yOff: -65,
+      xOff: isLeft ? 18 : -18,
+      rotate: isLeft ? -4 : 4,
+      dur: 5.8,
+    },
+  ];
+
+  return (
+    <motion.div
+      animate={{
+        y: [0, -14, 0],
+        rotate: isLeft ? [0, 2, 0] : [0, -2, 0],
+      }}
+      transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
+      className={`hidden lg:flex fixed bottom-6 ${
+        isLeft ? "left-10" : "right-10"
+      } flex-col items-center pointer-events-none z-10 select-none`}
+    >
+      <div className="relative w-36 h-48 flex items-center justify-center">
+        {balloons.map((b, idx) => (
+          <motion.div
+            key={idx}
+            animate={{
+              y: [0, idx % 2 === 0 ? -8 : 8, 0],
+              rotate: [b.rotate, b.rotate + (isLeft ? 3 : -3), b.rotate],
+            }}
+            transition={{
+              duration: b.dur,
+              repeat: Infinity,
+              ease: "easeInOut",
+              delay: idx * 0.4,
+            }}
+            className="absolute flex flex-col items-center"
+            style={{
+              top: `calc(35% + ${b.yOff}px)`,
+              left: `calc(28% + ${b.xOff}px)`,
+            }}
+          >
+            {/* Balloon Body */}
+            <div
+              className={`rounded-[50%_50%_48%_48%/55%_55%_45%_45%] bg-gradient-to-tr ${b.color} shadow-[0_12px_24px_rgba(244,63,94,0.18)] relative border border-white/60`}
+              style={{ width: `${b.w}px`, height: `${b.h}px` }}
+            >
+              {/* Glossy Specular Light Reflection */}
+              <div
+                className={`absolute top-2 left-3 w-4 h-7 rounded-full bg-gradient-to-b ${b.highlight} rotate-[-30deg] blur-[0.6px]`}
+              />
+              {/* Balloon Tie Knot */}
+              <div className="absolute -bottom-1.5 left-1/2 -translate-x-1/2 w-2.5 h-2 bg-rose-400/80 rounded-b-xs" />
+            </div>
+
+            {/* Curled Shimmer Ribbon */}
+            <svg
+              width="24"
+              height="80"
+              viewBox="0 0 24 80"
+              fill="none"
+              className="mt-[-2px] text-rose-300/70"
+            >
+              <path
+                d={
+                  isLeft
+                    ? "M12 0 C4 20, 20 40, 12 60 C8 70, 16 75, 12 80"
+                    : "M12 0 C20 20, 4 40, 12 60 C16 70, 8 75, 12 80"
+                }
+                stroke="currentColor"
+                strokeWidth="1.2"
+                strokeDasharray="3 1"
+              />
+            </svg>
+          </motion.div>
+        ))}
+      </div>
+    </motion.div>
+  );
+}
+
+// Warm Hanging Top Fairy Lights Garland
 function HangingFairyLights() {
   const bulbs = [
     { left: "6%", drop: 28, delay: 0.1, dur: 2.4 },
@@ -26,19 +222,27 @@ function HangingFairyLights() {
 
   return (
     <div className="fixed top-0 left-0 right-0 h-32 pointer-events-none z-20 overflow-hidden select-none">
-      {/* Delicate Curved Cord */}
-      <svg className="w-full h-16 absolute top-0 text-amber-900/20" preserveAspectRatio="none" viewBox="0 0 1200 60">
-        <path d="M0,10 Q150,45 300,10 Q450,45 600,10 Q750,45 900,10 Q1050,45 1200,10" fill="none" stroke="currentColor" strokeWidth="1.2" />
+      <svg
+        className="w-full h-16 absolute top-0 text-amber-900/20"
+        preserveAspectRatio="none"
+        viewBox="0 0 1200 60"
+      >
+        <path
+          d="M0,10 Q150,45 300,10 Q450,45 600,10 Q750,45 900,10 Q1050,45 1200,10"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.2"
+        />
       </svg>
 
-      {/* Hanging Warm Gold Bulbs */}
       {bulbs.map((b, idx) => (
-        <div key={idx} className="absolute flex flex-col items-center" style={{ left: b.left, top: 0 }}>
-          {/* Filament cord */}
+        <div
+          key={idx}
+          className="absolute flex flex-col items-center"
+          style={{ left: b.left, top: 0 }}
+        >
           <div className="w-[1px] bg-amber-900/25" style={{ height: `${b.drop}px` }} />
-          {/* Cap */}
           <div className="w-2 h-1.5 bg-amber-700/60 rounded-xs" />
-          {/* Bulb with Aura */}
           <motion.div
             animate={{
               opacity: [0.75, 1, 0.8, 0.95, 0.75],
@@ -65,17 +269,15 @@ function HangingFairyLights() {
   );
 }
 
-// Cinematic Ambient Golden Dust & Bokeh Orbs
+// Cinematic Bokeh Orbs & Gold Dust
 function AmbientBokehAtmosphere() {
   return (
     <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden select-none">
-      {/* Warm Ambient Radial Halos */}
       <div className="absolute -top-24 left-1/2 -translate-x-1/2 w-[42rem] h-[26rem] bg-gradient-to-b from-amber-200/25 via-rose-200/20 to-transparent rounded-full blur-3xl" />
       <div className="absolute top-1/3 -left-32 w-96 h-96 bg-rose-200/30 rounded-full blur-3xl" />
       <div className="absolute top-1/2 -right-32 w-96 h-96 bg-amber-100/30 rounded-full blur-3xl" />
       <div className="absolute bottom-10 left-1/3 w-[30rem] h-80 bg-pink-200/25 rounded-full blur-3xl" />
 
-      {/* Slowly Drifting Soft Gold Dust */}
       {[...Array(14)].map((_, i) => (
         <motion.div
           key={i}
@@ -193,10 +395,20 @@ export default function App() {
     >
       <CursorSparkleTrail />
 
-      {/* Elegant Atmospheric Lighting for Grand Finale (Step 4) */}
+      {/* Atmospheric Accents on Grand Finale (Step 4) */}
       {isGrandFinale && (
         <>
+          {/* Top Hanging Garland */}
           <HangingFairyLights />
+
+          {/* Option 3: Cascading Vertical Fairy Lights */}
+          <VerticalFairyLightCascades />
+
+          {/* Option 4: Floating Pastel Helium Balloon Clusters */}
+          <PastelHeliumBalloons side="left" />
+          <PastelHeliumBalloons side="right" />
+
+          {/* Golden Bokeh Atmosphere */}
           <AmbientBokehAtmosphere />
         </>
       )}

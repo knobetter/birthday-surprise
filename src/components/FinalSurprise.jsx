@@ -328,7 +328,7 @@ export default function FinalSurprise({ name }) {
     <p>✨ The confidence to never doubt your worth.</p>
     <p className="pt-2 text-slate-500 font-medium">And of course...</p>
     <p className="text-pink-600 font-bold">
-      😂 Many more years of having to tolerate me annoying you!
+      😂 Many more years of having to tolerate me!
     </p>
   </div>
 
@@ -337,7 +337,6 @@ export default function FinalSurprise({ name }) {
       🌸 HAPPIESTTTTT BIRTHDAYYYYY TO THE BEST SISTER & BEST FRIEND! 🎂✨
     </p>
     <p className="text-sm font-handwriting text-slate-500 font-bold mt-1 text-base">
-      💌 From Your Most Annoying Brother
     </p>
   </div>
 </div>

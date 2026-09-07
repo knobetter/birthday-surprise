@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import OpeningScreen from "./components/OpeningScreen";
 import PhotoGallery from "./components/PhotoGallery";
-import OpenWhenLetters from "./components/OpenWhenLetters";
 import FinalLetter from "./components/FinalLetter";
 import FinalSurprise from "./components/FinalSurprise";
 import MusicControl from "./components/MusicControl";
@@ -22,7 +21,7 @@ const FAIRY_LIGHTS_CONFIG = [
   { duration: 1.8, delay: 1.0 },
 ];
 
-// Petals floating in Step 5 (Grand Finale)
+// Petals floating in Step 4 (Grand Finale)
 const SIDE_PETALS = [
   { char: "🌹", side: "left", left: "4%", duration: 9, delay: 0, size: "text-2xl" },
   { char: "🪷", side: "left", left: "12%", duration: 12, delay: 1.5, size: "text-3xl" },
@@ -216,8 +215,8 @@ export default function App() {
   const audioRef = useRef(null);
 
   const isScrapbook = currentStep === 2;
-  const isNightSky = currentStep === 4;
-  const isGrandFinale = currentStep === 5;
+  const isNightSky = currentStep === 3;
+  const isGrandFinale = currentStep === 4;
 
   // Set default background music volume softly (30%)
   useEffect(() => {
@@ -395,7 +394,7 @@ export default function App() {
         </div>
       )}
 
-      {/* 🌸 FLORAL FINALE (STEP 5) 🌸 */}
+      {/* 🌸 FLORAL FINALE (STEP 4) 🌸 */}
       {isGrandFinale && (
         <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden select-none">
           <div className="absolute top-1/4 -left-20 w-80 h-80 rounded-full bg-rose-300/40 blur-3xl" />
@@ -509,13 +508,6 @@ export default function App() {
           )}
 
           {currentStep === 3 && (
-            <OpenWhenLetters
-              key="letters"
-              onComplete={handleNextStep}
-            />
-          )}
-
-          {currentStep === 4 && (
             <FinalLetter
               key="final-letter"
               onComplete={handleNextStep}
@@ -523,7 +515,7 @@ export default function App() {
             />
           )}
 
-          {currentStep === 5 && (
+          {currentStep === 4 && (
             <FinalSurprise
               key="grand-surprise"
               name={FRIEND_DATA.name}

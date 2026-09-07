@@ -302,7 +302,7 @@ const PHOTOS = [
   {
     id: 41,
     url: "/images/image55.jpeg",
-    caption: "",
+    caption: "Ivanni kaadhu, food ekkada!",
     rotation: "rotate-2",
     sticky: "",
     modalNote: "",

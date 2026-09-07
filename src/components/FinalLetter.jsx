@@ -2,18 +2,18 @@ import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Sparkles, Stars, Gift } from "lucide-react";
 
-export default function FinalLetter({ onComplete, name }) {
+export default function FinalLetter({ onComplete }) {
   const [isReadingFinished, setIsReadingFinished] = useState(false);
   const [showFinalButton, setShowFinalButton] = useState(false);
 
   const letterLines = [
-    "I don't know if I say this enough...",
+    "I know I say this alot....",
     "But I'm genuinely grateful that you came into my life. 🌸",
-    "From our random midnight conversations to our most stupid arguments, and all the chaotic moments in between—you've become someone I truly value and cherish.",
-    "Thank you for always listening when I rant, for laughing at my terrible jokes, and for just being someone I can always count on without hesitation.",
-    "You have a genuine heart, a stubborn spirit that never gives up, and an infectious smile that brightens up even the dullest rooms.",
-    "I hope you always remember how rare and wonderful you are. Never let anyone dim your sparkle, bestie.",
-    "I wish you nothing but genuine peace, boundless happiness, and massive success in everything you set your heart on this year. ❤️",
+    "You've become more than just a best friend to me; you've become family.",
+    "You have a genuine heart and an infectious smile that brightens up even the dullest rooms.",
+    "I hope you always remember how rare and wonderful you are. My sunshine, never let anyone dim your spark. ☀️✨",
+    "I wish you nothing but genuine peace, boundless happiness, and massive success in everything you set your heart on this year.",
+    "And whenever life gets difficult, just remember you'll always have your annoying brother.",
   ];
 
   const handleFinishReading = () => {
@@ -80,7 +80,7 @@ export default function FinalLetter({ onComplete, name }) {
             transition={{ duration: 0.8, delay: 0.3 }}
             className="w-full p-6 md:p-8 rounded-3xl bg-white/10 backdrop-blur-md border border-white/20 shadow-2xl text-left font-handwriting text-xl md:text-2xl leading-relaxed text-pink-100 flex flex-col gap-4"
           >
-            <p className="text-pink-300 font-bold">Dearest {name},</p>
+            <p className="text-pink-300 font-bold text-2xl">Dearest Sister,</p>
 
             {letterLines.map((line, index) => (
               <motion.p
@@ -101,7 +101,7 @@ export default function FinalLetter({ onComplete, name }) {
             >
               Always by your side,
               <br />
-              Your Annoying Best Friend 💗
+              Your Annoying Brother 🤍
             </motion.p>
           </motion.div>
 
@@ -111,7 +111,7 @@ export default function FinalLetter({ onComplete, name }) {
             animate={{ opacity: 1 }}
             transition={{ delay: 3.2 }}
             onClick={handleFinishReading}
-            className="mt-8 px-8 py-3 bg-pink-500/80 hover:bg-pink-500 text-white font-bold rounded-full shadow-lg border border-pink-300/40 backdrop-blur-sm active:scale-95 transition-all text-base"
+            className="mt-8 px-8 py-3 bg-pink-500/80 hover:bg-pink-500 text-white font-bold rounded-full shadow-lg border border-pink-300/40 backdrop-blur-sm active:scale-95 transition-all text-base cursor-pointer"
           >
             I've read it all... 🥺💗
           </motion.button>
@@ -151,7 +151,7 @@ export default function FinalLetter({ onComplete, name }) {
               >
                 <button
                   onClick={onComplete}
-                  className="px-8 py-5 bg-gradient-to-r from-pink-500 via-rose-500 to-purple-600 text-white font-extrabold text-lg md:text-xl rounded-full shadow-[0_0_30px_rgba(244,63,94,0.7)] hover:shadow-[0_0_40px_rgba(244,63,94,0.9)] hover:scale-105 active:scale-95 transition-all flex items-center gap-3 border border-pink-200/50 animate-pulse"
+                  className="px-8 py-5 bg-gradient-to-r from-pink-500 via-rose-500 to-purple-600 text-white font-extrabold text-lg md:text-xl rounded-full shadow-[0_0_30px_rgba(244,63,94,0.7)] hover:shadow-[0_0_40px_rgba(244,63,94,0.9)] hover:scale-105 active:scale-95 transition-all flex items-center gap-3 border border-pink-200/50 animate-pulse cursor-pointer"
                 >
                   <Gift className="w-6 h-6 text-white" />
                   <span>🎁 OPEN YOUR FINAL SURPRISE</span>

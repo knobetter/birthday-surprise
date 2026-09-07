@@ -348,7 +348,7 @@ export default function FinalSurprise({ name = "Ditya" }) {
 
         <div className="text-center mt-6 pt-4 border-t border-rose-100">
           <p className="text-xl md:text-2xl font-black bg-gradient-to-r from-rose-500 to-pink-600 bg-clip-text text-transparent">
-            🌸 HAPPIEST BIRTHDAY TO THE BEST SISTER & BEST FRIEND! 🎂✨
+            🌸 HAPPIESTTTTT BIRTHDAYYYYY TO THE BEST SISTER & BEST FRIEND! 🎂✨
           </p>
         </div>
       </div>
